@@ -1,4 +1,5 @@
 import pandas as pd
+import Game_Space.Playing_Table as game_data
 
 class Player():
 
@@ -21,7 +22,7 @@ class Player():
     #finally, for each player, for each suit, a record of if they still have that suit left
 
     def initial_generate_data(self):
-
+        self.firt_to_play = 0
         self.self_cards = {}
         self.other_cards = {}
 
@@ -70,5 +71,34 @@ class Player():
 
         for i in list_of_values:
             self.tertiary_values[i] = 0
+
+    def first_to_play(self):
+
+        for card in self.hand:
+            if card.suit == 'Club':
+                if card.rank == 2:
+                    self.first_to_play = 1
+
+
+    def play_card(self, card_suit, card_rank):
+
+        selected_index = 0
+
+        #using this method to get an index value, to later remove
+        for i in range(len(self.hand)):
+            hold_card = self.hand[i]
+            if hold_card.suit == card_suit:
+                if hold_card.rank == card_rank:
+                    selected_index = i
+                    #not easy to break the upper loop, but this should save a snippet of time
+                    break
+
+        selected_card = self.hand[selected_index]
+        game_data.played_cards.append(selected_card)
+        del self.hand[selected_index]
+
+        ##NOTE - AT THIS POINT WE NOW NEED TO IMPLEMENT A FUNCTION TO UPDATE ALL KNOWN VALUES
+        #once this is done, the move should be appended to the list of moves.
+
 
 
