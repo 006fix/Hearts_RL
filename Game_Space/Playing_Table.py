@@ -29,3 +29,7 @@ def calculate_score(play_dict, start_suit):
     holdval = score_dict[ref_dict['curr_winner'].name]
     holdval += points_for_hand
     score_dict[ref_dict['curr_winner']] = holdval
+
+    winner = ref_dict['curr_winner']
+
+    return winner

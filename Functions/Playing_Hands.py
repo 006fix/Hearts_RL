@@ -68,12 +68,23 @@ def play_hand(player1, player2, player3, player4, first_turn):
                     followed_suit = False
                 if i == 3:
                     #FUNCTION NEEDS TO GO HERE TO UPDATE SCORE DICT
-                    game_data.calculate_score(play_dict, 'Club')
+                    winner = game_data.calculate_score(play_dict, 'Club')
                     final_play = True
                 else:
                     final_play = False
                 player_actions.update_player_knowledge(player1, player2, player3, player4, cur_player_dict['cur_player'], chosen_card.suit,
                                                        chosen_card.rank, 'Club', followed_suit, final_play, game_data.score_dict)
+        print(f"{winner.name} won the hand")
+        #reset all players first to play to 0
+        player1.first_to_play = 0
+        player2.first_to_play = 0
+        player3.first_to_play = 0
+        player4.first_to_play = 0
+        winner.first_to_play = 1
+        print(f" player 1 to play = {player1.first_to_play}")
+        print(f" player 2 to play = {player2.first_to_play}")
+        print(f" player 3 to play = {player3.first_to_play}")
+        print(f" player 4 to play = {player4.first_to_play}")
     else:
         #play as normal
         pass
