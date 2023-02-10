@@ -16,6 +16,8 @@ player1.initial_other_knowledge()
 player1.first_to_play()
 player1.update_alt_player_card_suits()
 player1.reset_players_left_to_play()
+#only enable if you need to test first turn no dump mechanics
+#player1.testing_noclubs()
 
 player2.initial_generate_data()
 player2.first_populate_data()

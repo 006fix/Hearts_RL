@@ -1,4 +1,5 @@
 import Game_Space.Playing_Table as game_data
+import Functions.player_actions as player_actions
 
 def play_hand(player1, player2, player3, player4, first_turn):
 
@@ -16,7 +17,8 @@ def play_hand(player1, player2, player3, player4, first_turn):
     start_point = game_data.play_order.index(first_player)
     play_order = game_data.play_order[start_point:start_point+4]
 
-    hold_str = "play_list = ["
+    play_list = {'play_order': 0}
+    hold_str = "play_list['play_order'] = ["
     for i in play_order:
         hold_str += i
         hold_str += ", "
@@ -24,7 +26,11 @@ def play_hand(player1, player2, player3, player4, first_turn):
     hold_str += "]"
 
     #this gives us a sequential list of order of play
+    print(hold_str)
     exec(hold_str)
+
+    #making a variable to hold current_player
+    cur_player_dict = {'cur_player': 0}
 
     if first_turn == 1:
         #run the function to play a card, but simply provide the 2 of clubs for first player
@@ -32,10 +38,18 @@ def play_hand(player1, player2, player3, player4, first_turn):
         print(f"First player is {first_player}")
         exec(f"{first_player}.play_card('Club',2)")
         #here we need a function that updates each players knowledge
-        player1.update_knowledge(first_player, 'Club', 2, 'Club', True, False, game_data.score_dict)
-        player2.update_knowledge(first_player, 'Club', 2, 'Club', True, False, game_data.score_dict)
-        player3.update_knowledge(first_player, 'Club', 2, 'Club', True, False, game_data.score_dict)
-        player4.update_knowledge(first_player, 'Club', 2, 'Club', True, False, game_data.score_dict)
+        player_actions.update_player_knowledge(player1, player2, player3, player4, first_player, 'Club', 2, 'Club', True, False, game_data.score_dict)
+        for i in range(len(play_list['play_order'])):
+            if i == 0:
+                pass
+            else:
+                exec(f"cur_player_dict['cur_player'] = play_list['play_order'][{i}]")
+                print(cur_player_dict)
+                valid_options = player_actions.identify_card_to_player(cur_player_dict['cur_player'], 'Club', first_turn)
+                print(f"The valid options for {cur_player_dict['cur_player'].name} are:")
+                for card in valid_options:
+                    print(f"{card.suit}-{card.rank}")
+
     else:
         #play as normal
         pass

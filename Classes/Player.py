@@ -112,11 +112,10 @@ class Player():
         #using this method to get an index value, to later remove
         for i in range(len(self.hand)):
             hold_card = self.hand[i]
-            if hold_card.suit == card_suit:
-                if hold_card.rank == card_rank:
+            if hold_card.rank == card_rank:
+                if hold_card.suit == card_suit:
                     selected_index = i
-                    #not easy to break the upper loop, but this should save a snippet of time
-                    break
+
 
         selected_card = self.hand[selected_index]
         game_data.played_cards.append(selected_card)
@@ -201,5 +200,46 @@ class Player():
         else:
             self.update_intra_hand_scores(player_played, card_suit, card_rank, start_suit, followed_suit)
 
+    #function to identify what cards could be played
+    def identify_valid_cards(self, start_suit, first_turn):
+
+        valid_options = []
+
+        for card in self.hand:
+            if card.suit == start_suit:
+                valid_options.append(card)
+
+        #if we have no cards in the same suit
+        if len(valid_options) == 0:
+            for card in self.hand:
+                if first_turn == 0:
+                    valid_options.append(card)
+                else:
+                    #top 2 here exist for first turn no dump mechanics
+                    if card.suit == 'Heart':
+                        pass
+                    elif card.suit == 'Spade' and card.rank == 12:
+                        pass
+                    else:
+                        valid_options.append(card)
+
+        return valid_options
+
+    def testing_noclubs(self):
+        #This function just exists to validate first turn drop mechanics
+        #If the 2 of clubs is held, it will not run
+        #Otherwise, the suit of all clubs is turned into diamonds.
+        canrun = True
+
+        for card in self.hand:
+            if card.suit == 'Club':
+                if card.rank == 2:
+                    print("I'm afraid I'm unable to run as I hold the 2 of Clubs")
+                    canrun = False
+
+        if canrun:
+            for i in range(len(self.hand)):
+                if self.hand[i].suit == 'Club':
+                    self.hand[i].suit = 'Diamond'
 
 
