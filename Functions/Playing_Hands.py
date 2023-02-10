@@ -29,7 +29,13 @@ def play_hand(player1, player2, player3, player4, first_turn):
     if first_turn == 1:
         #run the function to play a card, but simply provide the 2 of clubs for first player
         #then for the remainder, play as normal
-        pass
+        print(f"First player is {first_player}")
+        exec(f"{first_player}.play_card('Club',2)")
+        #here we need a function that updates each players knowledge
+        player1.update_knowledge(first_player, 'Club', 2, 'Club', True, False, game_data.score_dict)
+        player2.update_knowledge(first_player, 'Club', 2, 'Club', True, False, game_data.score_dict)
+        player3.update_knowledge(first_player, 'Club', 2, 'Club', True, False, game_data.score_dict)
+        player4.update_knowledge(first_player, 'Club', 2, 'Club', True, False, game_data.score_dict)
     else:
         #play as normal
         pass
