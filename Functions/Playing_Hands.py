@@ -3,6 +3,11 @@ import Functions.player_actions as player_actions
 
 def play_hand(player1, player2, player3, player4, first_turn):
 
+    #stores record of player and card played
+    play_dict = {}
+    #this variable holds the most recently played card
+    selected_card_dict = {'recent_card': 0}
+
     first_player = ''
 
     if player1.first_to_play == 1:
@@ -36,7 +41,9 @@ def play_hand(player1, player2, player3, player4, first_turn):
         #run the function to play a card, but simply provide the 2 of clubs for first player
         #then for the remainder, play as normal
         print(f"First player is {first_player}")
-        exec(f"{first_player}.play_card('Club',2)")
+        exec(f"selected_card_dict['recent_card'] = {first_player}.play_card('Club',2)")
+        print(f"{first_player} has played Club-2 to start the game")
+        play_dict[first_player] = selected_card_dict['recent_card']
         #here we need a function that updates each players knowledge
         player_actions.update_player_knowledge(player1, player2, player3, player4, first_player, 'Club', 2, 'Club', True, False, game_data.score_dict)
         for i in range(len(play_list['play_order'])):
@@ -50,6 +57,23 @@ def play_hand(player1, player2, player3, player4, first_turn):
                 for card in valid_options:
                     print(f"{card.suit}-{card.rank}")
 
+                #NOW WE INSERT OUR RANDOM PLAY FUNCTION
+                chosen_card = cur_player_dict['cur_player'].testing_randomchoice(valid_options)
+                print(f"Player {cur_player_dict['cur_player'].name} has chosen to play {chosen_card.suit}, {chosen_card.rank}")
+                selected_card_dict['recent_card'] = cur_player_dict['cur_player'].play_card(chosen_card.suit, chosen_card.rank)
+                play_dict[cur_player_dict['cur_player']] = selected_card_dict['recent_card']
+                if chosen_card.suit == 'Club':
+                    followed_suit = True
+                else:
+                    followed_suit = False
+                if i == 3:
+                    #FUNCTION NEEDS TO GO HERE TO UPDATE SCORE DICT
+                    game_data.calculate_score(play_dict, 'Club')
+                    final_play = True
+                else:
+                    final_play = False
+                player_actions.update_player_knowledge(player1, player2, player3, player4, cur_player_dict['cur_player'], chosen_card.suit,
+                                                       chosen_card.rank, 'Club', followed_suit, final_play, game_data.score_dict)
     else:
         #play as normal
         pass

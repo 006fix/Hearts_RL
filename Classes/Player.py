@@ -1,5 +1,6 @@
 import pandas as pd
 import Game_Space.Playing_Table as game_data
+import random
 
 class Player():
 
@@ -121,11 +122,16 @@ class Player():
         game_data.played_cards.append(selected_card)
         del self.hand[selected_index]
 
+        return selected_card
+
         ##NOTE - AT THIS POINT WE NOW NEED TO IMPLEMENT A FUNCTION TO UPDATE ALL KNOWN VALUES
         #once this is done, the move should be appended to the list of moves.
 
     #this function runs at the end of every hand, and updates hand level scores
     def update_end_of_hand_scores(self, score_dict):
+
+        holdval = 0
+
         for key in score_dict:
             if key == self.name:
                 holdval = self.tertiary_values['score_self']
@@ -134,9 +140,9 @@ class Player():
             else:
                 for item in self.alt_player_dict:
                     if key == self.alt_player_dict[item]:
-                        exec(f"holdval = self.tertiary_values[score_{item}]")
+                        exec(f"holdval = self.tertiary_values['score_{item}']")
                         holdval += score_dict[key]
-                        exec(f"self.tertiary_values[score_{item} = holdval")
+                        exec(f"self.tertiary_values['score_{item}'] = holdval")
 
 
     def reset_players_left_to_play(self):
@@ -242,4 +248,12 @@ class Player():
                 if self.hand[i].suit == 'Club':
                     self.hand[i].suit = 'Diamond'
 
+    #NEED A FUNCTION FOR WHAT TO PLAY IF PLAYING FIRST
 
+
+    def testing_randomchoice(self, valid_options):
+
+        random.shuffle(valid_options)
+        chosen_card = valid_options[0]
+
+        return chosen_card
