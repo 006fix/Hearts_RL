@@ -200,6 +200,7 @@ class Player():
             holdval += 1
             self.tertiary_values['hands_played'] = holdval
             #WE NEED A FUNCTION ON SCORE DICT HERE TO UPDATE SCORES
+            self.update_intra_hand_scores(player_played, card_suit, card_rank, start_suit, followed_suit)
             self.update_end_of_hand_scores(score_dict)
         else:
             self.update_intra_hand_scores(player_played, card_suit, card_rank, start_suit, followed_suit)

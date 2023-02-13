@@ -39,5 +39,25 @@ while cards_remaining >0:
     print(f"At the end of this turn, the everbroken status is {everbroken} and the broken status is {broken}")
     print(f"At the end of this turn, the scores are {game_data.score_dict}")
 
+    #testing function for game 1
+    #just looking to see if midgame tertiary dictionary info is correct
+
+    if cards_remaining == 0:
+        var1 = copy.copy(player1.tertiary_values)
+        var2 = player2.hand
+        var3 = player3.hand
+        var4 = player4.hand
+        break
 
 print(f"At the end of the game, the scores are {game_data.score_dict}")
+
+print(var1)
+print("Player2 hand")
+for card in var2:
+    print(f"{card.suit}-{card.rank}")
+print("Player3 hand")
+for card in var3:
+    print(f"{card.suit}-{card.rank}")
+print("Player4 hand")
+for card in var4:
+    print(f"{card.suit}-{card.rank}")

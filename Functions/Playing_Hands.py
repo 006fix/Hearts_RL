@@ -83,6 +83,11 @@ def play_hand(player1, player2, player3, player4, first_turn, broken, everbroken
         player2.first_to_play = 0
         player3.first_to_play = 0
         player4.first_to_play = 0
+        player1.reset_players_left_to_play()
+        player2.reset_players_left_to_play()
+        player3.reset_players_left_to_play()
+        player4.reset_players_left_to_play()
+
         #since we're now returning a string of the name, switch back to exec
         exec(f"{winner}.first_to_play = 1")
         print(f" player 1 to play = {player1.first_to_play}")
@@ -163,6 +168,10 @@ def play_hand(player1, player2, player3, player4, first_turn, broken, everbroken
         player2.first_to_play = 0
         player3.first_to_play = 0
         player4.first_to_play = 0
+        player1.reset_players_left_to_play()
+        player2.reset_players_left_to_play()
+        player3.reset_players_left_to_play()
+        player4.reset_players_left_to_play()
         #switching to exec as winner is now a name
         exec(f"{winner}.first_to_play = 1")
         print(f" player 1 to play = {player1.first_to_play}")
