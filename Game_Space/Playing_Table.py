@@ -16,7 +16,9 @@ def calculate_score(play_dict, start_suit):
         if play_dict[key].suit == start_suit:
             if play_dict[key].rank > top_rank:
                 top_rank = play_dict[key].rank
+                #holdval = key.name
                 ref_dict['curr_winner'] = key
+
 
     #identify points in hand
     for key in play_dict:
@@ -26,9 +28,11 @@ def calculate_score(play_dict, start_suit):
             if play_dict[key].rank == 12:
                 points_for_hand += 13
 
-    holdval = score_dict[ref_dict['curr_winner'].name]
+    holdval = score_dict[ref_dict['curr_winner']]
     holdval += points_for_hand
     score_dict[ref_dict['curr_winner']] = holdval
+
+    print(f"At the end of this turn, {ref_dict['curr_winner']} earned {points_for_hand} points!")
 
     winner = ref_dict['curr_winner']
 

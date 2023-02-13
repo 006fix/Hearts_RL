@@ -207,13 +207,24 @@ class Player():
             self.update_intra_hand_scores(player_played, card_suit, card_rank, start_suit, followed_suit)
 
     #function to identify what cards could be played
-    def identify_valid_cards(self, start_suit, first_turn):
+    def identify_valid_cards(self, start_suit, first_turn, broken):
 
         valid_options = []
 
         for card in self.hand:
-            if card.suit == start_suit:
-                valid_options.append(card)
+            if start_suit == False:
+                if broken:
+                    valid_options.append(card)
+                else:
+                    if card.suit == 'Heart':
+                        pass
+                    elif card.suit == 'Spade' and card.rank == 12:
+                        pass
+                    else:
+                        valid_options.append(card)
+            else:
+                if card.suit == start_suit:
+                    valid_options.append(card)
 
         #if we have no cards in the same suit
         if len(valid_options) == 0:
