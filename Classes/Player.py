@@ -100,8 +100,6 @@ class Player():
 
     def first_to_play(self):
         self.first_to_play = 0
-        print(f"fish fish testing {self.hand}")
-        print(f"{len(self.hand)}")
         for card in self.hand:
             if card.suit == 'Club':
                 if card.rank == 2:
@@ -132,19 +130,15 @@ class Player():
     #this function runs at the end of every hand, and updates hand level scores
     def update_end_of_hand_scores(self, score_dict):
 
-        holdval = 0
-
         for key in score_dict:
             if key == self.name:
-                holdval = self.tertiary_values['score_self']
-                holdval += score_dict[key]
-                self.tertiary_values['score_self'] = holdval
+                self.tertiary_values['score_self'] = score_dict[key]
             else:
                 for item in self.alt_player_dict:
                     if key == self.alt_player_dict[item]:
-                        exec(f"holdval = self.tertiary_values['score_{item}']")
-                        holdval += score_dict[key]
-                        exec(f"self.tertiary_values['score_{item}'] = holdval")
+                        holdval = score_dict[key]
+                        holdstr = f"self.tertiary_values['score_{item}'] = {holdval}"
+                        exec(holdstr)
 
 
     def reset_players_left_to_play(self):
@@ -173,7 +167,7 @@ class Player():
 
     #this function runs after every player plays, and updates intra-hand level scores
     def update_intra_hand_scores(self, player_played, card_suit, card_rank, start_suit, followed_suit):
-
+        print(f"Now activating for player {player_played}")
         #WE NEED TO REMOVE FROM SELF.OTHER_CARDS, OR SELF.OWN_CARDS AS NEEDED
         holdval = f"{card_suit}-{card_rank}"
         if player_played == self.name:
@@ -189,12 +183,14 @@ class Player():
             #if others played, we need to update
             for item in self.alt_player_dict:
                 if player_played == self.alt_player_dict[item]:
+                    print(f"fish fish activation with followed_suit of {followed_suit}")
                     #easier than just referencing item
                     active_player = item
                     #set that player left_to_play = 0
                     exec(f"self.tertiary_values['left_to_play_{active_player}'] = 0")
                     #we also need to update suit held values if the player didn't follow suit
                     if followed_suit == False:
+                        print(f"fish fish I am now activating because {active_player} has failed to follow suit of {start_suit}")
                         exec(f"self.tertiary_values['{active_player}_{start_suit}'] = 0")
 
     def update_knowledge(self, player_played, card_suit, card_rank, start_suit, followed_suit, hand_finished, score_dict):

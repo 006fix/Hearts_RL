@@ -75,7 +75,7 @@ def play_hand(player1, player2, player3, player4, first_turn, broken, everbroken
                     final_play = True
                 else:
                     final_play = False
-                player_actions.update_player_knowledge(player1, player2, player3, player4, cur_player_dict['cur_player'], chosen_card.suit,
+                player_actions.update_player_knowledge(player1, player2, player3, player4, cur_player_dict['cur_player'].name, chosen_card.suit,
                                                        chosen_card.rank, 'Club', followed_suit, final_play, game_data.score_dict)
         print(f"{winner} won the hand")
         #reset all players first to play to 0
@@ -120,7 +120,7 @@ def play_hand(player1, player2, player3, player4, first_turn, broken, everbroken
                 play_dict[player_name_holder] = selected_card_dict['recent_card']
 
                 player_actions.update_player_knowledge(player1, player2, player3, player4,
-                                                       cur_player_dict['cur_player'], chosen_card.suit,
+                                                       cur_player_dict['cur_player'].name, chosen_card.suit,
                                                        chosen_card.rank, hand_suit, True, False,
                                                        game_data.score_dict)
 
@@ -155,7 +155,7 @@ def play_hand(player1, player2, player3, player4, first_turn, broken, everbroken
                     final_play = True
                 else:
                     final_play = False
-                player_actions.update_player_knowledge(player1, player2, player3, player4, cur_player_dict['cur_player'], chosen_card.suit,
+                player_actions.update_player_knowledge(player1, player2, player3, player4, cur_player_dict['cur_player'].name, chosen_card.suit,
                                                        chosen_card.rank, hand_suit, followed_suit, final_play, game_data.score_dict)
         print(f"{winner} won the hand")
         #reset all players first to play to 0
