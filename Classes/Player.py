@@ -99,7 +99,9 @@ class Player():
             self.tertiary_values[i] = 0
 
     def first_to_play(self):
-
+        self.first_to_play = 0
+        print(f"fish fish testing {self.hand}")
+        print(f"{len(self.hand)}")
         for card in self.hand:
             if card.suit == 'Club':
                 if card.rank == 2:
